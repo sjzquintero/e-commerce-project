@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  date: 2024-07-07 12:53:07
+  total: 9.99
+  status: MyString
+  province_id: 1
+
+two:
+  user_id: 1
+  date: 2024-07-07 12:53:07
+  total: 9.99
+  status: MyString
+  province_id: 1

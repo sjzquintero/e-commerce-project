@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  product_id: 1
+  price: 9.99
+  effective_date: 2024-07-07 12:53:12
+
+two:
+  product_id: 1
+  price: 9.99
+  effective_date: 2024-07-07 12:53:12
