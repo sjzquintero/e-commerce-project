@@ -7,4 +7,8 @@ class ProductsController < ApplicationController
     @category = Category.find(params[:id])
     @products = @category.products
   end
+
+  def show
+    @product = Product.find(params[:id])
+  end
 end

@@ -5,7 +5,7 @@
 <div>
   <% @products.each do |product| %>
     <div>
-      <h2><%= product.name %></h2>
+      <h2><%= link_to product.name, product_path(product) %></h2>
       <p><%= product.description %></p>
       <p>Price: <%= product.price %></p>
       <%= image_tag url_for(product.image), size: "100x100" if product.image.attached? %>
