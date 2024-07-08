@@ -5,7 +5,15 @@
     <li><%= link_to 'Home', root_path %></li>
     <li><%= link_to 'About', static_page_path(title: 'About') %></li>
     <li><%= link_to 'Contact', static_page_path(title: 'Contact') %></li>
+    <li><%= link_to 'All Products', products_path %></li>
   </ul>
 </nav>
+
+<h2>Categories</h2>
+<ul>
+  <% Category.all.each do |category| %>
+    <li><%= link_to category.name, products_by_category_path(category) %></li>
+  <% end %>
+</ul>
 
 <p>This is the home page of our e-commerce store. Browse our products and learn more about us.</p>

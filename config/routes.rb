@@ -13,4 +13,8 @@ Rails.application.routes.draw do
 
   # Root route
   root "home#index"
+
+  # Routes for products
+  get 'products', to: 'products#index', as: 'products'
+  get 'products/category/:id', to: 'products#by_category', as: 'products_by_category'
 end
