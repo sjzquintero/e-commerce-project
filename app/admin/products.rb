@@ -1,5 +1,5 @@
 ActiveAdmin.register Product do
-  permit_params :name, :description, :price, :stock, :category_id
+  permit_params :name, :description, :price, :stock, :category_id, :image
 
   index do
     selectable_column
@@ -9,6 +9,11 @@ ActiveAdmin.register Product do
     column :price
     column :stock
     column :category
+    column :image do |product|
+      if product.image.attached?
+        image_tag url_for(product.image), size: "100x100"
+      end
+    end
     actions
   end
 
@@ -19,6 +24,7 @@ ActiveAdmin.register Product do
       f.input :price
       f.input :stock
       f.input :category
+      f.input :image, as: :file
     end
     f.actions
   end
@@ -31,6 +37,11 @@ ActiveAdmin.register Product do
       row :price
       row :stock
       row :category
+      row :image do |product|
+        if product.image.attached?
+          image_tag url_for(product.image), size: "300x300"
+        end
+      end
     end
   end
 
