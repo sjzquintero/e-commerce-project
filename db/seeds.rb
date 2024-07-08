@@ -1,10 +1,18 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+# clean database ( to avoid duplicates on development)
+Category.destroy_all
+
+# Create categories
+categories = [
+  { name: 'T-Shirts and Tops', description: 'Comfortable and stylish urban tops.' },
+  { name: 'Jeans and Pants', description: 'Variety of jeans and pants for any occasion.' },
+  { name: 'Hoodies and Sweatshirts', description: 'Casual and trendy hoodies and sweatshirts.' },
+  { name: 'Jackets and Coats', description: 'Stylish jackets and coats for urban wear.' },
+  { name: 'Footwear', description: 'Urban shoes and sneakers.' },
+  { name: 'Accessories', description: 'Complete your look with our accessories.' }
+]
+
+categories.each do |category|
+  Category.create(category)
+end
+
+puts "Categories created successfully."

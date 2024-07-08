@@ -4,16 +4,18 @@ class Product < ApplicationRecord
   has_many :orders, through: :order_details
   has_many :historical_prices
 
-  validates :name, :description, :price, :stock, :category, presence: true
-  validates :price, numericality: { greater_than_or_equal_to: 0 }
+  validates :name, presence: true
+  validates :description, presence: true
+  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :stock, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  before_save :update_historical_price
+  # Método ransackable_associations
+  def self.ransackable_associations(auth_object = nil)
+    %w[category historical_prices order_details orders]
+  end
 
-  private
-
-  def update_historical_price
-    if price_changed?
-      HistoricalPrice.create(product_id: id, price: price, effective_date: Time.current)
-    end
+  # Método ransackable_attributes
+  def self.ransackable_attributes(auth_object = nil)
+    %w[id name description price stock category_id created_at updated_at]
   end
 end

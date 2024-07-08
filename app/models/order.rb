@@ -13,4 +13,12 @@ class Order < ApplicationRecord
     taxes = subtotal * (province.GST / 100.0 + province.PST / 100.0 + province.HST / 100.0)
     self.total = subtotal + taxes
   end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["order_details", "products", "province", "user"]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "date", "id", "id_value", "province_id", "status", "total", "updated_at", "user_id"]
+  end
 end
