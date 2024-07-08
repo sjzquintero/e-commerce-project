@@ -10,5 +10,6 @@ Rails.application.routes.draw do
 
   get 'products', to: 'products#index', as: 'products'
   get 'products/category/:id', to: 'products#by_category', as: 'products_by_category'
+  get 'products/search', to: 'products#search', as: 'search_products'  # Move search route up
   get 'products/:id', to: 'products#show', as: 'product'
 end

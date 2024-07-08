@@ -2,6 +2,16 @@
 
 <%= link_to 'Home', root_path %>
 
+<%= form_with(url: search_products_path, method: "get", local: true) do |form| %>
+  <%= form.text_field :query, placeholder: "Search products..." %>
+  <%= form.submit "Search" %>
+<% end %>
+
+<% @products.each do |product| %>
+  
+<% end %>
+
+
 <div>
   <% @products.each do |product| %>
     <div>
@@ -14,3 +24,4 @@
 </div>
 
 <%= paginate @products %>
+
