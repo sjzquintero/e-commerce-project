@@ -67,3 +67,7 @@ group :test do
 end
 
 gem "tailwindcss-rails", "~> 2.6"
+
+gem "activeadmin", "~> 3.2"
+
+gem "devise", "~> 4.9"
