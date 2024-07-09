@@ -14,4 +14,11 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find(params[:id])
   end
+  def on_sale
+    @products = Product.on_sale.page(params[:page]).per(10)
+  end
+
+  def new_products
+    @products = Product.new_products.page(params[:page]).per(10)
+  end
 end

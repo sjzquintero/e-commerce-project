@@ -15,6 +15,11 @@ class Product < ApplicationRecord
     where("name LIKE :keyword OR description LIKE :keyword", keyword: "%#{keyword}%")
   }
 
+  scope :on_sale, -> { where("stock > ?", 89) }
+
+
+  scope :new_products, -> { where("created_at >= ?", 1.hour.ago) }
+
   def self.ransackable_associations(auth_object = nil)
     %w[category historical_prices order_details orders]
   end
