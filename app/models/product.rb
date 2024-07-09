@@ -11,12 +11,14 @@ class Product < ApplicationRecord
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :stock, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  # Método ransackable_associations
+  scope :search_by_keyword, ->(keyword) {
+    where("name LIKE :keyword OR description LIKE :keyword", keyword: "%#{keyword}%")
+  }
+
   def self.ransackable_associations(auth_object = nil)
     %w[category historical_prices order_details orders]
   end
 
-  # Método ransackable_attributes
   def self.ransackable_attributes(auth_object = nil)
     %w[id name description price stock category_id created_at updated_at]
   end
