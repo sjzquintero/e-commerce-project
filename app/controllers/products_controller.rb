@@ -1,11 +1,9 @@
 class ProductsController < ApplicationController
-
   def index
-    @products = Product.page(params[:page]).per(10)
-  end
-
-  def show
-    @product = Product.find(params[:id])
+    @products = Product.all
+    @products = @products.search_by_keyword(params[:search]) if params[:search].present?
+    @products = @products.where(category_id: params[:category_id]) if params[:category_id].present?
+    @products = @products.page(params[:page]).per(10)
   end
 
   def by_category
@@ -13,12 +11,7 @@ class ProductsController < ApplicationController
     @products = @category.products.page(params[:page]).per(10)
   end
 
-  def search
-    if params[:query].present?
-      query = "%#{params[:query].downcase}%"
-      @products = Product.where('LOWER(name) LIKE ? OR LOWER(description) LIKE ?', query, query).page(params[:page]).per(10)
-    else
-      @products = Product.all.page(params[:page]).per(10)
-    end
+  def show
+    @product = Product.find(params[:id])
   end
 end

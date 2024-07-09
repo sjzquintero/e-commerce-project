@@ -1,16 +1,11 @@
 <h1>All Products</h1>
-
 <%= link_to 'Home', root_path %>
 
-<%= form_with(url: search_products_path, method: "get", local: true) do |form| %>
-  <%= form.text_field :query, placeholder: "Search products..." %>
+<%= form_with(url: products_path, method: "get") do |form| %>
+  <%= form.text_field :search, placeholder: "Search by keyword" %>
+  <%= form.collection_select :category_id, Category.all, :id, :name, prompt: "Select a category" %>
   <%= form.submit "Search" %>
 <% end %>
-
-<% @products.each do |product| %>
-  
-<% end %>
-
 
 <div>
   <% @products.each do |product| %>
@@ -24,4 +19,3 @@
 </div>
 
 <%= paginate @products %>
-
