@@ -18,7 +18,7 @@ class Product < ApplicationRecord
   scope :on_sale, -> { where("stock > ?", 89) }
 
 
-  scope :new_products, -> { where("created_at >= ?", 1.hour.ago) }
+  scope :new_products, -> { where("created_at >= ?", 2.days.ago) }
 
   def self.ransackable_associations(auth_object = nil)
     %w[category historical_prices order_details orders]
