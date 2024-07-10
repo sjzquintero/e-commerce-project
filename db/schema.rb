@@ -25,7 +25,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_004653) do
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
   end
 
-
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
