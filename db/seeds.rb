@@ -1,21 +1,21 @@
-require 'faker'
+provinces = [
+  { name: 'Alberta',GST: 5, PST: 0, HST: 0 },
+  { name: 'British Columbia',GST: 5, PST: 7, HST: 0 },
+  { name: 'Manitoba',GST: 5, PST: 7, HST: 0 },
+  { name: 'New Brunswick',GST: 5, PST: 10, HST: 0 },
+  { name: 'Newfoundland and Labrador',GST: 5, PST: 10, HST: 0 },
+  { name: 'Northwest Territories',GST: 5, PST: 0, HST: 0 },
+  { name: 'Nova Scotia',GST: 5, PST: 10, HST: 0 },
+  { name: 'Nunavut',GST: 5, PST: 0, HST: 0 },
+  { name: 'Ontario',GST: 5, PST: 8, HST: 0 },
+  { name: 'Prince Edward Island',GST: 5, PST: 10, HST: 0 },
+  { name: 'Quebec',GST: 5, PST: 9.975, HST: 0 },
+  { name: 'Saskatchewan',GST: 5, PST: 6, HST: 0 },
+  { name: 'Yukon',GST: 5, PST: 0, HST: 0 }
+]
 
-# Seed categories
-categories = Category.all
-
-# Define the number of products you want to seed
-number_of_products = 100
-
-# Seed products
-number_of_products.times do
-  category = categories.sample  # Select a random category for each product
-  Product.create!(
-    name: Faker::Commerce.product_name,
-    description: Faker::Lorem.paragraph(sentence_count: 2),
-    price: Faker::Commerce.price(range: 10.0..100.0),
-    stock: Faker::Number.between(from: 1, to: 100),
-    category: category
-  )
+provinces.each do |province|
+  Province.create!(province)
 end
 
-puts "Seed data for products created successfully!"
+puts "Provinces seeded successfully!"
