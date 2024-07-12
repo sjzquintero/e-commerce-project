@@ -15,7 +15,7 @@ class Product < ApplicationRecord
     where("name LIKE :keyword OR description LIKE :keyword", keyword: "%#{keyword}%")
   }
 
-  scope :on_sale, -> { where("stock > ?", 89) }
+  scope :on_sale, -> { where("price < ?", 15) }
 
 
   scope :new_products, -> { where("created_at >= ?", 2.days.ago) }
