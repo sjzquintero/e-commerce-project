@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'carts/show'
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
@@ -12,6 +13,10 @@ Rails.application.routes.draw do
   get '/pages/:title', to: 'static_pages#show', as: 'static_page'
 
   root "home#index"
+
+  resource :cart, only: [:show] do
+    post 'add_product', to: 'carts#add_product'
+  end
 
   get 'products/on_sale', to: 'products#on_sale', as: 'on_sale_products'
   get 'products/new_products', to: 'products#new_products', as: 'new_products'

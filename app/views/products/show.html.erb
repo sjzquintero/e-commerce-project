@@ -15,6 +15,8 @@
   <h2>Category</h2>
   <p><%= @product.category.name %></p>
 
+<%= button_to 'Añadir al Carrito', add_product_cart_path(product_id: @product.id), method: :post %>
+
   <h2>Image</h2>
   <%= image_tag url_for(@product.image), size: "300x300" if @product.image.attached? %>
 </div>

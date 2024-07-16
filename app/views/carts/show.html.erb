@@ -1,0 +1,28 @@
+<!-- app/views/carts/show.html.erb -->
+<h1>Tu Carrito de Compras</h1>
+
+<% if @order.order_details.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio Unitario</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @order.order_details.each do |order_detail| %>
+        <tr>
+          <td><%= order_detail.product.name %></td>
+          <td><%= order_detail.quantity %></td>
+          <td><%= number_to_currency(order_detail.unit_price) %></td>
+          <td><%= number_to_currency(order_detail.quantity * order_detail.unit_price) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <p>Total del pedido: <%= number_to_currency(@order.total) %></p>
+<% else %>
+  <p>Tu carrito está vacío.</p>
+<% end %>
