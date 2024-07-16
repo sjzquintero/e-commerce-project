@@ -9,19 +9,27 @@ class CartsController < ApplicationController
   def add_product
     product = Product.find(params[:product_id])
     @order = current_order
-    @order_detail = @order.order_details.find_or_initialize_by(product: product)
+    quantity = params[:quantity].to_i
 
-    if @order_detail.new_record?
-      @order_detail.quantity = 1
-      @order_detail.unit_price = product.price
-    else
-      @order_detail.quantity += 1
+    if quantity > 5
+      redirect_to product_path(product), alert: 'No puedes agregar más de 5 unidades del mismo producto.'
+      return
     end
 
-    @order_detail.save
-    @order.save
+    @order_detail = @order.order_details.find_or_initialize_by(product: product)
 
-    redirect_to cart_path, notice: 'Producto añadido al carrito.'
+    new_quantity = @order_detail.new_record? ? quantity : @order_detail.quantity + quantity
+
+    if new_quantity > 5
+      redirect_to product_path(product), alert: 'No puedes tener más de 5 unidades del mismo producto en el carrito.'
+    else
+      @order_detail.quantity = new_quantity
+      @order_detail.unit_price = product.price
+      @order_detail.save
+      @order.save
+
+      redirect_to cart_path, notice: 'Producto añadido al carrito.'
+    end
   end
 
   private
