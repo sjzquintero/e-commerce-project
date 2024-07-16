@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   root "home#index"
 
   resource :cart, only: [:show] do
-    post 'add_product', to: 'carts#add_product'
+    post 'add_product/:product_id', action: :add_product, as: 'add_product'
+    patch 'update_quantity/:id', action: :update_quantity, as: 'update_quantity'
+    delete 'remove_product/:id', action: :remove_product, as: 'remove_product'
   end
 
   get 'products/on_sale', to: 'products#on_sale', as: 'on_sale_products'

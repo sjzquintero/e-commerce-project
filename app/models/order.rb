@@ -8,6 +8,8 @@ class Order < ApplicationRecord
 
   before_save :calculate_total
 
+  accepts_nested_attributes_for :order_details, allow_destroy: true
+
   def calculate_total
     subtotal = order_details.sum('quantity * unit_price')
     taxes = subtotal * (province.GST / 100.0 + province.PST / 100.0 + province.HST / 100.0)

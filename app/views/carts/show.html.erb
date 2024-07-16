@@ -1,28 +1,35 @@
-<!-- app/views/carts/show.html.erb -->
-<h1>Tu Carrito de Compras</h1>
+<h1>Shopping cart</h1>
 
-<% if @order.order_details.any? %>
-  <table>
-    <thead>
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Unitary price</th>
+      <th>quantity</th>
+      <th>Subtotal</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.order_details.each do |order_detail| %>
       <tr>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Precio Unitario</th>
-        <th>Total</th>
+        <td><%= order_detail.product.name %></td>
+        <td><%= number_to_currency(order_detail.unit_price) %></td>
+        <td>
+          <%= form_with model: order_detail, url: update_quantity_cart_path(order_detail.id), method: :patch, local: true do |form| %>
+            <%= form.number_field :quantity, value: order_detail.quantity, min: 1, max: 5 %>
+            <%= form.submit 'Update' %>
+          <% end %>
+        </td>
+        <td><%= number_to_currency(order_detail.quantity * order_detail.unit_price) %></td>
+        <td><%= link_to 'remove', remove_product_cart_path(order_detail.id), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></td>
       </tr>
-    </thead>
-    <tbody>
-      <% @order.order_details.each do |order_detail| %>
-        <tr>
-          <td><%= order_detail.product.name %></td>
-          <td><%= order_detail.quantity %></td>
-          <td><%= number_to_currency(order_detail.unit_price) %></td>
-          <td><%= number_to_currency(order_detail.quantity * order_detail.unit_price) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <p>Total del pedido: <%= number_to_currency(@order.total) %></p>
-<% else %>
-  <p>Tu carrito está vacío.</p>
-<% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<div>
+  <strong>Total: <%= number_to_currency(@order.total) %></strong>
+</div>
+
+<%= link_to 'Keep browsing', root_path %>
