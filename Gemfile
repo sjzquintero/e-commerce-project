@@ -77,3 +77,7 @@ gem "sassc-rails", "~> 2.1"
 gem "faker", "~> 3.4"
 
 gem "kaminari", "~> 1.2"
+
+gem "discordrb", "~> 3.5"
+
+gem 'dotenv-rails', groups: [:development, :test]
