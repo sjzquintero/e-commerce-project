@@ -18,6 +18,9 @@ Rails.application.routes.draw do
     post 'add_product/:product_id', action: :add_product, as: 'add_product'
     patch 'update_quantity/:id', action: :update_quantity, as: 'update_quantity'
     delete 'remove_product/:id', action: :remove_product, as: 'remove_product'
+
+    get 'checkout', on: :collection
+    post 'process_checkout', to: 'carts#process_checkout'
   end
 
   get 'products/on_sale', to: 'products#on_sale', as: 'on_sale_products'

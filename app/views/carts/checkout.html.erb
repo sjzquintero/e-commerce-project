@@ -1,0 +1,30 @@
+<h1>Checkout</h1>
+
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<%= form_with model: @order, url: process_checkout_cart_path, method: :post, local: true do |f| %>
+  <div>
+    <%= f.label :address %>
+    <%= f.text_field :address, value: @order.address || current_user.address %>
+  </div>
+  <div>
+    <%= f.label :province_id, 'Province' %>
+    <%= f.collection_select :province_id, Province.all, :id, :name, selected: @order.province_id || current_user.province_id %>
+  </div>
+  <h2>Order Details</h2>
+  <ul>
+    <% @order.order_details.each do |detail| %>
+      <li>
+        <%= detail.product.name %> - Quantity: <%= detail.quantity %> - Unit Price: <%= number_to_currency(detail.unit_price) %>
+      </li>
+    <% end %>
+  </ul>
+  <p>Subtotal: <%= number_to_currency(@order.order_details.sum { |detail| detail.quantity * detail.unit_price }) %></p>
+  <p>Taxes: <%= number_to_currency(@order.taxes) %></p>
+  <p>Total: <%= number_to_currency(@order.calculate_total) %></p>
+  <%= f.submit 'Complete Order' %>
+<% end %>

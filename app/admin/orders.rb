@@ -1,5 +1,5 @@
 ActiveAdmin.register Order do
-  permit_params :user_id, :date, :total, :status, :province_id
+  permit_params :user_id, :date, :total, :status, :province_id, :address
 
   index do
     selectable_column
@@ -9,6 +9,7 @@ ActiveAdmin.register Order do
     column :total
     column :status
     column :province
+    column :address
     actions
   end
 
@@ -19,6 +20,7 @@ ActiveAdmin.register Order do
       f.input :total
       f.input :status
       f.input :province
+      f.input :address
     end
     f.actions
   end
@@ -31,6 +33,7 @@ ActiveAdmin.register Order do
       row :total
       row :status
       row :province
+      row :address
     end
   end
 
@@ -39,4 +42,5 @@ ActiveAdmin.register Order do
   filter :total
   filter :status
   filter :province
+  filter :address
 end

@@ -1,4 +1,3 @@
-# app/controllers/carts_controller.rb
 class CartsController < ApplicationController
   before_action :authenticate_user!
 
@@ -28,7 +27,7 @@ class CartsController < ApplicationController
       @order_detail.save
       @order.save
 
-      redirect_to cart_path, notice: 'Producto added to the cart.'
+      redirect_to cart_path, notice: 'Product added to the cart.'
     end
   end
 
@@ -57,6 +56,31 @@ class CartsController < ApplicationController
     redirect_to cart_path, notice: 'Product removed from the cart.'
   end
 
+  def checkout
+    @order = current_order
+
+    if @order.order_details.empty?
+      redirect_to cart_path, alert: "Your cart is empty. Please add some items before checking out."
+    end
+  end
+
+  def process_checkout
+    @order = current_order
+    @order.attributes = order_params
+
+    # Si el usuario no tiene dirección o provincia, usarlas del formulario
+    if current_user.address.blank? || current_user.province.blank?
+      current_user.update(address: @order.address, province: @order.province)
+    end
+
+    @order.status = 'completed'
+    if @order.save
+      session[:order_id] = nil # Limpiar la sesión de la orden
+      redirect_to root_path, notice: 'Order completed successfully.'
+    else
+      render :checkout
+    end
+  end
 
   private
 
@@ -72,6 +96,6 @@ class CartsController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(order_details_attributes: [:id, :quantity])
+    params.require(:order).permit(:address, :province_id, order_details_attributes: [:id, :quantity])
   end
 end

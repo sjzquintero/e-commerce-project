@@ -4,7 +4,7 @@ class Order < ApplicationRecord
   has_many :order_details, dependent: :destroy
   has_many :products, through: :order_details
 
-  validates :user, :date, :total, :status, :province, presence: true
+  validates :user_id, :date, :total, :status, :province_id, :address, presence: true
 
   before_save :calculate_total
 
@@ -12,8 +12,12 @@ class Order < ApplicationRecord
 
   def calculate_total
     subtotal = order_details.sum('quantity * unit_price')
-    taxes = subtotal * (province.GST / 100.0 + province.PST / 100.0 + province.HST / 100.0)
     self.total = subtotal + taxes
+  end
+
+  def taxes
+    subtotal = order_details.sum('quantity * unit_price')
+    subtotal * (province.GST / 100.0 + province.PST / 100.0 + province.HST / 100.0)
   end
 
   def self.ransackable_associations(auth_object = nil)
@@ -21,6 +25,6 @@ class Order < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "date", "id", "id_value", "province_id", "status", "total", "updated_at", "user_id"]
+    ["created_at", "date", "id", "id_value", "province_id", "status", "total", "updated_at", "user_id", "address"]
   end
 end
