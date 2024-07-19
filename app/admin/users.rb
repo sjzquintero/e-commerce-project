@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :name, :email, :password, :address, :province_id
+  permit_params :name, :email, :password, :address, :province_id, :avatar
 
   index do
     selectable_column
@@ -8,6 +8,13 @@ ActiveAdmin.register User do
     column :email
     column :address
     column :province
+    column :avatar do |user|
+      if user.avatar.attached?
+        image_tag user.avatar.variant(resize_to_limit: [100, 100]), class: 'thumbnail'
+      else
+        "No image"
+      end
+    end
     actions
   end
 
@@ -18,6 +25,7 @@ ActiveAdmin.register User do
       f.input :password
       f.input :address
       f.input :province
+      f.input :avatar, as: :file
     end
     f.actions
   end
@@ -29,6 +37,13 @@ ActiveAdmin.register User do
       row :email
       row :address
       row :province
+      row :avatar do |user|
+        if user.avatar.attached?
+          image_tag user.avatar.variant(resize_to_limit: [200, 200]), class: 'thumbnail'
+        else
+          "No image"
+        end
+      end
     end
   end
 
