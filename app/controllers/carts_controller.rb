@@ -11,7 +11,7 @@ class CartsController < ApplicationController
     quantity = params[:quantity].to_i
 
     if quantity > 5
-      redirect_to product_path(product), alert: 'You can not get more than 5 units for the same product.'
+      redirect_to product_path(product), alert: 'You cannot add more than 5 units of the same product.'
       return
     end
 
@@ -20,7 +20,7 @@ class CartsController < ApplicationController
     new_quantity = @order_detail.new_record? ? quantity : @order_detail.quantity + quantity
 
     if new_quantity > 5
-      redirect_to product_path(product), alert: 'You can not get more than 5 units for the same product.'
+      redirect_to product_path(product), alert: 'You cannot add more than 5 units of the same product.'
     else
       @order_detail.quantity = new_quantity
       @order_detail.unit_price = product.price
@@ -36,15 +36,15 @@ class CartsController < ApplicationController
     new_quantity = params[:order_detail][:quantity].to_i
 
     if new_quantity > 5
-      redirect_to cart_path, alert: 'You can not get more than 5 units for the same product.'
+      redirect_to cart_path, alert: 'You cannot have more than 5 units of the same product.'
       return
     end
 
     if @order_detail.update(quantity: new_quantity)
       @order_detail.order.save
-      redirect_to cart_path, notice: 'Amount updated succesfully.'
+      redirect_to cart_path, notice: 'Quantity updated successfully.'
     else
-      redirect_to cart_path, alert: 'Error updating the amount.'
+      redirect_to cart_path, alert: 'Error updating the quantity.'
     end
   end
 
@@ -68,14 +68,13 @@ class CartsController < ApplicationController
     @order = current_order
     @order.attributes = order_params
 
-    # Si el usuario no tiene dirección o provincia, usarlas del formulario
     if current_user.address.blank? || current_user.province.blank?
       current_user.update(address: @order.address, province: @order.province)
     end
 
     @order.status = 'completed'
     if @order.save
-      session[:order_id] = nil # Limpiar la sesión de la orden
+      session[:order_id] = nil # Clear the order session
       redirect_to root_path, notice: 'Order completed successfully.'
     else
       render :checkout
@@ -86,13 +85,21 @@ class CartsController < ApplicationController
 
   def current_order
     if session[:order_id].present?
-      Order.find(session[:order_id])
+      begin
+        Order.find(session[:order_id])
+      rescue ActiveRecord::RecordNotFound
+        create_new_order
+      end
     else
-      order = Order.new(user: current_user, date: Date.today, status: 'pending', province: current_user.province)
-      order.save(validate: false)
-      session[:order_id] = order.id
-      order
+      create_new_order
     end
+  end
+
+  def create_new_order
+    order = Order.new(user: current_user, date: Date.today, status: 'pending', province: current_user.province)
+    order.save(validate: false)
+    session[:order_id] = order.id
+    order
   end
 
   def order_params
