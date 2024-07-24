@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateHistoricalPrices < ActiveRecord::Migration[7.1]
   def change
     create_table :historical_prices do |t|

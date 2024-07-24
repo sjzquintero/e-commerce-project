@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register Product do
   permit_params :name, :description, :price, :stock, :category_id, :image
 
@@ -10,9 +12,7 @@ ActiveAdmin.register Product do
     column :stock
     column :category
     column :image do |product|
-      if product.image.attached?
-        image_tag url_for(product.image), size: "100x100"
-      end
+      image_tag url_for(product.image), size: '100x100' if product.image.attached?
     end
     actions
   end
@@ -38,9 +38,7 @@ ActiveAdmin.register Product do
       row :stock
       row :category
       row :image do |product|
-        if product.image.attached?
-          image_tag url_for(product.image), size: "300x300"
-        end
+        image_tag url_for(product.image), size: '300x300' if product.image.attached?
       end
     end
   end

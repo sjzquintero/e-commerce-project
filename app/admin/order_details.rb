@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register OrderDetail do
   permit_params :order_id, :product_id, :quantity, :unit_price
 

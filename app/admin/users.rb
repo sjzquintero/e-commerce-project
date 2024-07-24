@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register User do
   permit_params :name, :email, :password, :address, :province_id, :avatar
 
@@ -12,7 +14,7 @@ ActiveAdmin.register User do
       if user.avatar.attached?
         image_tag user.avatar.variant(resize_to_limit: [100, 100]), class: 'thumbnail'
       else
-        "No image"
+        'No image'
       end
     end
     actions
@@ -41,7 +43,7 @@ ActiveAdmin.register User do
         if user.avatar.attached?
           image_tag user.avatar.variant(resize_to_limit: [200, 200]), class: 'thumbnail'
         else
-          "No image"
+          'No image'
         end
       end
     end

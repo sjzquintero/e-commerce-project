@@ -28,4 +28,14 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  carts:
+    alerts:
+      cannot_add_more_than_5: 'You cannot add more than 5 units of the same product.'
+      product_added: 'Product added to the cart.'
+      cannot_have_more_than_5: 'You cannot have more than 5 units of the same product.'
+      quantity_updated: 'Quantity updated successfully.'
+      error_updating_quantity: 'Error updating the quantity.'
+      product_removed: 'Product removed from the cart.'
+      cart_empty: 'Your cart is empty. Please add some items before checking out.'
+      order_completed: 'Order completed successfully.'
+

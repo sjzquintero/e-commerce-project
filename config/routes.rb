@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   get 'carts/show'
   devise_for :users, controllers: {
@@ -7,12 +9,11 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-
-  get "up" => "rails/health#show", as: :rails_health_check
+  get 'up' => 'rails/health#show', as: :rails_health_check
 
   get '/pages/:title', to: 'static_pages#show', as: 'static_page'
 
-  root "home#index"
+  root 'home#index'
 
   resource :cart, only: [:show] do
     post 'add_product/:product_id', action: :add_product, as: 'add_product'

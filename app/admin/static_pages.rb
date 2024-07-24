@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register StaticPage do
   permit_params :title, :content
 
@@ -20,7 +22,7 @@ ActiveAdmin.register StaticPage do
     attributes_table do
       row :title
       row :content do |page|
-        page.content.html_safe
+        sanitize(page.content)
       end
     end
   end

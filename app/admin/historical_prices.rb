@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register HistoricalPrice do
   permit_params :product_id, :price, :effective_date
 
