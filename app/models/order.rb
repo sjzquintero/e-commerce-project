@@ -52,6 +52,8 @@ class Order < ApplicationRecord
 
   accepts_nested_attributes_for :order_details, allow_destroy: true
 
+  scope :completed, -> { where(status: 'completed') }
+
   def calculate_total
     subtotal = order_details.sum("quantity * unit_price")
     self.total = subtotal + taxes

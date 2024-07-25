@@ -1,0 +1,30 @@
+<h1>Your Orders</h1>
+
+<% if @orders.any? %>
+  <table class="table-auto w-full">
+    <thead>
+      <tr>
+        <th class="px-4 py-2">Order ID</th>
+        <th class="px-4 py-2">Date</th>
+        <th class="px-4 py-2">Status</th>
+        <th class="px-4 py-2">Total</th>
+        <th class="px-4 py-2">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td class="border px-4 py-2"><%= order.id %></td>
+          <td class="border px-4 py-2"><%= order.date.strftime("%B %d, %Y") %></td>
+          <td class="border px-4 py-2"><%= order.status.capitalize %></td>
+          <td class="border px-4 py-2"><%= number_to_currency(order.total) %></td>
+          <td class="border px-4 py-2">
+            <%= link_to 'View Details', order_path(order), class: "btn btn-primary" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>You have no past orders.</p>
+<% end %>
