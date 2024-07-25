@@ -29,7 +29,7 @@
 </table>
 
 <div>
-  <strong>Total: <%= number_to_currency(@order.total) %></strong>
+  <strong>Total: <%= number_to_currency(@order.calculate_total) %></strong>
 </div>
 
 <%= link_to 'Keep browsing', root_path %>

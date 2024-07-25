@@ -41,6 +41,7 @@ class OrderDetail < ApplicationRecord
   end
 
   class << self
+    # Remove the private declaration here
     def ransackable_associations(_auth_object = nil)
       %w[order product]
     end
@@ -48,7 +49,5 @@ class OrderDetail < ApplicationRecord
     def ransackable_attributes(_auth_object = nil)
       %w[created_at id id_value order_id product_id quantity unit_price updated_at]
     end
-
-    private :ransackable_associations, :ransackable_attributes
   end
 end
